@@ -1,6 +1,6 @@
 import { expect as expectCDK, haveResource } from "@aws-cdk/assert";
 import * as cdk from "@aws-cdk/core";
-import * as MadliberationWebapp from "../lib/madliberation-webapp";
+import * as MadliberationWebapp from "../lib/app";
 
 const OLD_ENV = process.env;
 beforeEach(() => {
@@ -14,8 +14,5 @@ test("can instantiate webapp stack", () => {
   const app = new cdk.App();
   process.env.GITHUB_REPOSITORY = "douglasnaphas/madliberation";
   process.env.GITHUB_REF = "refs/heads/master";
-  const stack = new MadliberationWebapp.MadliberationWebapp(
-    app,
-    "MyTestWebapp"
-  );
+  const stack = new MadliberationWebapp.SummoningButtonApp(app, "MyTestWebapp");
 });

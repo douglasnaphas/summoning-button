@@ -3,10 +3,7 @@ import * as cdk from "@aws-cdk/core";
 import { Console } from "console";
 const AWS = require("aws-sdk");
 const crypto = require("crypto");
-import {
-  MadliberationWebapp,
-  MadLiberationWebappProps,
-} from "../lib/madliberation-webapp";
+import { SummoningButtonApp, SummoningButtonProps } from "../lib/app";
 const stackname = require("@cdk-turnkey/stackname");
 
 (async () => {
@@ -149,7 +146,7 @@ const stackname = require("@cdk-turnkey/stackname");
   console.log("and zoneId:");
   console.log(webappProps.zoneId);
   // TODO: print a hash of the IDP app secrets
-  new MadliberationWebapp(app, stackname("webapp"), {
-    ...(webappProps as MadLiberationWebappProps),
+  new SummoningButtonApp(app, stackname("webapp"), {
+    ...(webappProps as SummoningButtonProps),
   });
 })();
