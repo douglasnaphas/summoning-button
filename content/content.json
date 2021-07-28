@@ -1,0 +1,59 @@
+{
+  "Items": [
+    {
+      "haggadah_description": {
+        "S": "A brief history of Brian Liberation"
+      },
+      "lib_id": {
+        "S": "script#0001"
+      },
+      "haggadah_short_desc": {
+        "S": "Brief History"
+      },
+      "room_code": {
+        "S": "script#AAAAAA"
+      },
+      "path": {
+        "S": "001-Brief_History"
+      },
+      "is_script": {
+        "N": "1"
+      },
+      "haggadah_name": {
+        "S": "0001 - Brief History"
+      },
+      "script_number": {
+        "N": "1"
+      }
+    },
+    {
+      "haggadah_description": {
+        "S": "Brian goes to Grand Lake, Oklahoma"
+      },
+      "lib_id": {
+        "S": "script#0002"
+      },
+      "haggadah_short_desc": {
+        "S": "A Trip to Grand Lake"
+      },
+      "room_code": {
+        "S": "script#AAAAAB"
+      },
+      "path": {
+        "S": "002-Grand_Lake"
+      },
+      "is_script": {
+        "N": "1"
+      },
+      "haggadah_name": {
+        "S": "0002 - Grand Lake"
+      },
+      "script_number": {
+        "N": "2"
+      }
+    }
+  ],
+  "Count": 1,
+  "ScannedCount": 1,
+  "ConsumedCapacity": null
+}
