@@ -146,7 +146,7 @@ const stackname = require("@cdk-turnkey/stackname");
   console.log("and zoneId:");
   console.log(webappProps.zoneId);
   // TODO: print a hash of the IDP app secrets
-  new SummoningButtonApp(app, stackname("webapp"), {
+  new SummoningButtonApp(app, stackname("app"), {
     ...(webappProps as SummoningButtonProps),
   });
 })();

@@ -30,44 +30,19 @@ jobs:
         run: |
           npm install
 
-      - name: Install frontend
-        working-directory: frontend
+      - name: Install click
+        working-directory: click
         run: |
           npm install
 
-      - name: Install backend
-        working-directory: backend
-        run: |
-          npm install
-
-      - name: Test backend
-        working-directory: backend
+      - name: Test click
+        working-directory: click
         run: |
           npm test
 
       - name: Build
         run: |
           npm run build
-
-      - name: Build frontend
-        working-directory: frontend
-        run: |
-          npm run build
-
-      - name: Test frontend
-        working-directory: frontend
-        run: |
-          npm test
-
-      - name: Install content
-        working-directory: content
-        run: |
-          npm install
-
-      - name: Test content
-        working-directory: content
-        run: |
-          npm test
 
       - name: Test
         run: |
@@ -82,40 +57,15 @@ jobs:
           aws sts get-caller-identity
           echo ${AWS_DEFAULT_REGION} | sed 's/-/+/g'
 
-      - name: Deploy the webapp stack to the test account
+      - name: Deploy the app stack to the test account
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.TEST_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.TEST_AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-1"
         run: |
           npx cdk bootstrap
-          STACKNAME=$(npx @cdk-turnkey/stackname@1.2.0 --suffix webapp)
+          STACKNAME=$(npx @cdk-turnkey/stackname@1.2.0 --suffix app)
           npx cdk deploy --require-approval never ${STACKNAME}
-
-      - name: Deploy to the frontend bucket (test account)
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.TEST_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TEST_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "us-east-1"
-        run: |
-          bash scripts/deploy-frontend.sh
-
-      - name: Deploy to the non-CloudFront bucket (test account)
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.TEST_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TEST_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "us-east-1"
-        run: |
-          bash scripts/deploy-non-cf.sh
-
-      - name: Deploy content (test account)
-        working-directory: content
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.TEST_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TEST_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "us-east-1"
-        run: |
-          bash deploy-content.sh
 
       - name: Install itest
         working-directory: itest
@@ -141,40 +91,15 @@ jobs:
           aws sts get-caller-identity
           echo ${AWS_DEFAULT_REGION} | sed 's/-/+/g'
 
-      - name: Deploy the webapp stack to the prod account
+      - name: Deploy the app stack to the prod account
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-1"
         run: |
           npx cdk bootstrap
-          STACKNAME=$(npx @cdk-turnkey/stackname@1.2.0 --suffix webapp)
+          STACKNAME=$(npx @cdk-turnkey/stackname@1.2.0 --suffix app)
           npx cdk deploy --require-approval never ${STACKNAME}
-
-      - name: Deploy to the frontend bucket (prod account)
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "us-east-1"
-        run: |
-          bash scripts/deploy-frontend.sh
-
-      - name: Deploy to the non-CloudFront bucket (prod account)
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "us-east-1"
-        run: |
-          bash scripts/deploy-non-cf.sh
-
-      - name: Deploy content (prod account)
-        working-directory: content
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "us-east-1"
-        run: |
-          bash deploy-content.sh
 
       - name: Run integration tests, prod account
         working-directory: scripts
