@@ -3,7 +3,7 @@
   "description": "Click handler(s) for summoning-button",
   "version": "0.1.0",
   "dependencies": {
-    "aws-sdk": "^2.382.0"
+    "aws-sdk": "^2.956.0"
   },
   "devDependencies": {
     "jest": "^24.9.0"
