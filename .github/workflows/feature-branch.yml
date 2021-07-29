@@ -30,44 +30,19 @@ jobs:
         run: |
           npm install
 
-      - name: Install frontend
-        working-directory: frontend
+      - name: Install click
+        working-directory: click
         run: |
           npm install
 
-      - name: Install backend
-        working-directory: backend
-        run: |
-          npm install
-
-      - name: Test backend
-        working-directory: backend
+      - name: Test click
+        working-directory: click
         run: |
           npm test
 
       - name: Build
         run: |
           npm run build
-
-      - name: Build frontend
-        working-directory: frontend
-        run: |
-          npm run build
-
-      - name: Test frontend
-        working-directory: frontend
-        run: |
-          npm test
-
-      - name: Install content
-        working-directory: content
-        run: |
-          npm install
-
-      - name: Test content
-        working-directory: content
-        run: |
-          npm test
 
       - name: Test
         run: |
@@ -82,7 +57,7 @@ jobs:
           aws sts get-caller-identity
           echo ${AWS_DEFAULT_REGION} | sed 's/-/+/g'
 
-      - name: Deploy the webapp stack to dev account
+      - name: Deploy the app stack to dev account
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
@@ -91,31 +66,6 @@ jobs:
           npx cdk bootstrap
           STACKNAME=$(npx @cdk-turnkey/stackname@1.2.0 --suffix webapp)
           npx cdk deploy --require-approval never ${STACKNAME}
-
-      - name: Deploy to the frontend bucket (dev account)
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "us-east-1"
-        run: |
-          bash scripts/deploy-frontend.sh
-
-      - name: Deploy to the non-CloudFront bucket (dev account)
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "us-east-1"
-        run: |
-          bash scripts/deploy-non-cf.sh
-
-      - name: Deploy content (dev account)
-        working-directory: content
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: "us-east-1"
-        run: |
-          bash deploy-content.sh
 
       - name: Install itest
         working-directory: itest
