@@ -41,44 +41,19 @@ jobs:
         run: |
           npm install
 
-      - name: Install frontend
-        working-directory: frontend
+      - name: Install click
+        working-directory: click
         run: |
           npm install
 
-      - name: Install backend
-        working-directory: backend
-        run: |
-          npm install
-
-      - name: Test backend
-        working-directory: backend
+      - name: Test click
+        working-directory: click
         run: |
           npm test
 
       - name: Build
         run: |
           npm run build
-
-      - name: Build frontend
-        working-directory: frontend
-        run: |
-          npm run build
-
-      - name: Test frontend
-        working-directory: frontend
-        run: |
-          npm test
-
-      - name: Install content
-        working-directory: content
-        run: |
-          npm install
-
-      - name: Test content
-        working-directory: content
-        run: |
-          npm test
 
       - name: Test
         run: |
@@ -102,19 +77,19 @@ jobs:
         run: |
           GITHUB_REF="refs/heads/${TO_REF}" npx cdk diff
 
-      # - name: Identify prod account and region
-      #   env:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
-      #     AWS_DEFAULT_REGION: "us-east-1"
-      #   run: |
-      #     aws sts get-caller-identity
-      #     echo ${AWS_DEFAULT_REGION} | sed 's/-/+/g'
+      - name: Identify prod account and region
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "us-east-1"
+        run: |
+          aws sts get-caller-identity
+          echo ${AWS_DEFAULT_REGION} | sed 's/-/+/g'
 
-      # - name: Diff the prod account
-      #   env:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
-      #     AWS_DEFAULT_REGION: "us-east-1"
-      #   run: |
-      #     npx cdk diff
+      - name: Diff the prod account
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "us-east-1"
+        run: |
+          npx cdk diff
