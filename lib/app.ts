@@ -24,14 +24,14 @@ export class SummoningButtonApp extends cdk.Stack {
       timeout: cdk.Duration.seconds(20),
     });
 
-    fn.addToRolePolicy(
-      // it needs to publish to the SNS topic
-      new PolicyStatement({
-        effect: Effect.ALLOW,
-        actions: ["cognito-idp:DescribeUserPoolClient"],
-        resources: [`arn:aws:`],
-      })
-    );
+    // fn.addToRolePolicy(
+    //   // it needs to publish to the SNS topic
+    //   new PolicyStatement({
+    //     effect: Effect.ALLOW,
+    //     actions: ["cognito-idp:DescribeUserPoolClient"],
+    //     resources: [`arn:aws:`],
+    //   })
+    // );
 
     new cdk.CfnOutput(this, "ClickHandlerName", {
       value: fn.functionName,
