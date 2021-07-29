@@ -38,7 +38,7 @@ jobs:
       - name: Test click
         working-directory: click
         run: |
-          npm test
+          npm test --passWithNoTests
 
       - name: Build
         run: |
@@ -46,7 +46,7 @@ jobs:
 
       - name: Test
         run: |
-          npm test
+          npm test --passWithNoTests
 
       - name: Identify dev account and region
         env:
