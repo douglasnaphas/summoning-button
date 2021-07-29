@@ -14,7 +14,7 @@
   "author": "Douglas Naphas",
   "license": "Apache-2.0",
   "devDependencies": {
-    "jest": "^25.1.0"
+    "jest": "^27.0.6"
   },
   "dependencies": {
     "aws-sdk": "^2.844.0"
