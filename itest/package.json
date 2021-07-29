@@ -1,7 +1,7 @@
 {
-  "name": "madliberation-itest",
+  "name": "summoning-button-itest",
   "version": "3.0.0",
-  "description": "Browser-based tests of the Mad Liberation web app",
+  "description": "Integration tests of summoning-button",
   "bin": "./App.itest.cjs",
   "type": "module",
   "main": "App.itest.cjs",
@@ -11,27 +11,12 @@
   "scripts": {
     "test": "jest --passWithNoTests && echo 'this script is the test'"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/douglasnaphas/madliberation-itest.git"
-  },
-  "keywords": [
-    "puppeteer"
-  ],
   "author": "Douglas Naphas",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/douglasnaphas/madliberation-itest/issues"
-  },
-  "homepage": "https://github.com/douglasnaphas/madliberation-itest#readme",
   "devDependencies": {
     "jest": "^25.1.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.844.0",
-    "bufferutil": "^4.0.3",
-    "commander": "^7.0.0",
-    "puppeteer": "^7.0.1",
-    "utf-8-validate": "^5.0.5"
+    "aws-sdk": "^2.844.0"
   }
 }
