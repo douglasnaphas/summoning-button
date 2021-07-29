@@ -2,7 +2,6 @@
   "name": "click",
   "description": "Click handler(s) for summoning-button",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "aws-sdk": "^2.382.0"
   },
