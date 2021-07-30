@@ -16,7 +16,6 @@ export class SummoningButtonApp extends cdk.Stack {
     const { snsTopicArn, subscriberPhoneNumber } = props;
 
     const topic = new sns.Topic(this, "SummoningTopic", {
-      contentBasedDeduplication: false,
       fifo: false,
     });
 
