@@ -12,22 +12,23 @@ const stackname = require("@cdk-turnkey/stackname");
   // This is the array I'll eventually use to elegantly state these names only
   // once in this file.
   class ConfigParam {
-    webappParamName: string;
-    ssmParamName = () => stackname(this.webappParamName);
+    appParamName: string;
+    ssmParamName = () => stackname(this.appParamName);
     ssmParamValue?: string;
     print = () => {
       console.log("webappParamName");
-      console.log(this.webappParamName);
+      console.log(this.appParamName);
       console.log("ssmParamName:");
       console.log(this.ssmParamName());
       console.log("ssmParamValue:");
       console.log(this.ssmParamValue);
     };
-    constructor(webappParamName: string) {
-      this.webappParamName = webappParamName;
+    constructor(appParamName: string) {
+      this.appParamName = appParamName;
     }
   }
   const configParams: Array<ConfigParam> = [
+    new ConfigParam("subscriberPhoneNumber"),
     new ConfigParam("fromAddress"),
     new ConfigParam("domainName"),
     new ConfigParam("zoneId"),
@@ -82,15 +83,19 @@ const stackname = require("@cdk-turnkey/stackname");
   configParams.forEach((c) => {
     c.ssmParamValue = ssmParameterData[c.ssmParamName()];
   });
-  const webappProps: any = {};
+  const appProps: any = {};
   configParams.forEach((c) => {
-    webappProps[c.webappParamName] = c.ssmParamValue;
+    appProps[c.appParamName] = c.ssmParamValue;
   });
 
   // Validation
-  if (webappProps.fromAddress) {
+
+  // TODO: validate the subscriberPhoneNumber. The account should be allowed to
+  // text it.
+
+  if (appProps.fromAddress) {
     // Validate the fromAddress, if provided
-    const { fromAddress } = webappProps;
+    const { fromAddress } = appProps;
     const sesv2 = new AWS.SESV2({ apiVersion: "2019-09-27" });
     // Check to make sure the email is verified and has sending enabled
     let sesv2Response: any;
@@ -140,13 +145,13 @@ const stackname = require("@cdk-turnkey/stackname");
   // or build fail if anything goes wrong.
 
   console.log("bin: Instantiating stack with fromAddress:");
-  console.log(webappProps.fromAddress);
+  console.log(appProps.fromAddress);
   console.log("and domainName:");
-  console.log(webappProps.domainName);
+  console.log(appProps.domainName);
   console.log("and zoneId:");
-  console.log(webappProps.zoneId);
+  console.log(appProps.zoneId);
   // TODO: print a hash of the IDP app secrets
   new SummoningButtonApp(app, stackname("app"), {
-    ...(webappProps as SummoningButtonProps),
+    ...(appProps as SummoningButtonProps),
   });
 })();
