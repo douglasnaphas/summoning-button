@@ -7,6 +7,8 @@ exports.handler = async (event, context) => {
   const region = process.env.REGION;
   const topicArn = process.env.TOPIC_ARN;
   const client = new SNSClient({ region });
+  const summoningDate = new Date();
+  const message = `You have been summoned, at ${summoningDate}.`;
   const publishParams = { TopicArn: topicArn, Message: "This is a summoning." };
   const publishCommand = new PublishCommand(publishParams);
   try {
